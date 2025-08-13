@@ -28,12 +28,10 @@ export class Signup {
 
   form : FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.passwordStrength]]
+    password: ['', [
+      Validators.required, 
+      Validators.minLength(10),
+      passwordStrength()
+    ]]
   })
-
- 
-
- 
-
-  
 }
