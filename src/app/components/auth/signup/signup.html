@@ -1,0 +1,22 @@
+<section>
+    <form class="w-full h-dvh" [formGroup]="form">
+        <div class="flex flex-col justify-center items-center size-full">
+            <mat-form-field class="w-xs">
+                <mat-label>Email</mat-label>
+                <input type="email" 
+                       matInput 
+                       formControlName="email" 
+                       placeholder="Ex. pat@example.com">
+                <mat-error>Email is mandatory</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-xs">
+                <mat-label>Password</mat-label>
+                <input type="password" 
+                       matInput 
+                       formControlName="password">
+                <mat-error>error</mat-error>
+            </mat-form-field>
+            <button type="submit" matButton="outlined">Sign up</button>
+        </div>    
+    </form>
+</section>
