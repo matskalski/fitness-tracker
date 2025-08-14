@@ -11,7 +11,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { passwordStrengthValidator } from '../../../validators/password-strength.validator'
 import { passwordConfirmValidator } from '../../../validators/password-confirm.validator';
-import { CommonModule } from '@angular/common';
 import { ConfirmPasswordErrorStateMatcher } from './signup.state-matchers';
 
 @Component({
@@ -21,8 +20,7 @@ import { ConfirmPasswordErrorStateMatcher } from './signup.state-matchers';
     MatFormFieldModule, 
     MatInputModule, 
     ReactiveFormsModule, 
-    MatButtonModule,
-    CommonModule
+    MatButtonModule
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
@@ -31,6 +29,7 @@ export class Signup {
   constructor(private fb: FormBuilder){ }
 
   confirmPasswordErrorStateMatcher : ConfirmPasswordErrorStateMatcher = new ConfirmPasswordErrorStateMatcher();
+  requiredPasswordLength: number = 10
 
   form : FormGroup = this.fb.group({
     email: ['', [
@@ -39,7 +38,7 @@ export class Signup {
     ]],
     password: ['', [
       Validators.required, 
-      Validators.minLength(10),
+      Validators.minLength(this.requiredPasswordLength),
       passwordStrengthValidator()
     ]],
     confirmPassword: ['', [
@@ -48,6 +47,10 @@ export class Signup {
   }, {
     validators: [passwordConfirmValidator()]
   })
+
+  get getCurrentPasswordLength(){
+    return this.form.controls['password'].value?.length
+  }
 
   get getEmailError() {
     const emailControl = this.form.controls['email'];
@@ -71,7 +74,7 @@ export class Signup {
     }
 
     if(passwordControl.hasError('minlength')){
-      return "Hasło musi zawierać minimum 10 znaków";
+      return `Hasło musi zawierać minimum ${this.requiredPasswordLength} znaków`;
     }
 
     if(passwordControl.hasError('passwordIsNotStrongEnough')){
