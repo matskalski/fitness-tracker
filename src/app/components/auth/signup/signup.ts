@@ -9,7 +9,10 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { passwordStrength } from '../../../validators/password-strength.validator'
+import { passwordStrengthValidator } from '../../../validators/password-strength.validator'
+import { passwordConfirmValidator } from '../../../validators/password-confirm.validator';
+import { CommonModule } from '@angular/common';
+import { ConfirmPasswordErrorStateMatcher } from './signup.state-matchers';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +21,8 @@ import { passwordStrength } from '../../../validators/password-strength.validato
     MatFormFieldModule, 
     MatInputModule, 
     ReactiveFormsModule, 
-    MatButtonModule
+    MatButtonModule,
+    CommonModule
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
@@ -26,12 +30,60 @@ import { passwordStrength } from '../../../validators/password-strength.validato
 export class Signup {
   constructor(private fb: FormBuilder){ }
 
+  confirmPasswordErrorStateMatcher : ConfirmPasswordErrorStateMatcher = new ConfirmPasswordErrorStateMatcher();
+
   form : FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [
+      Validators.required, 
+      Validators.email
+    ]],
     password: ['', [
       Validators.required, 
       Validators.minLength(10),
-      passwordStrength()
-    ]]
+      passwordStrengthValidator()
+    ]],
+    confirmPassword: ['']
+  }, {
+    validators: [passwordConfirmValidator()]
   })
+
+  get getEmailError() {
+    let emailControl = this.form.controls['email'];
+
+    if(emailControl.hasError('required')){
+      return "Email jest wymagany";
+    }
+
+    if(emailControl.hasError('email')){
+      return "Email ma nieprawidłowy format";
+    }
+
+    return "Błędna wartość";
+  }
+
+  get getPasswordError() {
+    let passwordControl = this.form.controls['password'];
+
+    if(passwordControl.hasError('required')){
+      return "Hasło jest wymagane";
+    }
+
+    if(passwordControl.hasError('minlength')){
+      return "Hasło musi zawierać minimum 10 znaków";
+    }
+
+    if(passwordControl.hasError('passwordIsNotStrongEnough')){
+      return "Hasło nie spełnia wymagań złożoności";
+    }
+
+    return "Błędna wartość";
+  }
+
+  get getConfirmPasswordError() {
+    if(this.form.hasError('passwordsAreNotTheSame')){
+      return "Hasła nie są takie same";
+    }
+
+    return null;
+  }
 }
