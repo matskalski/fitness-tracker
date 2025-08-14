@@ -13,8 +13,10 @@
             </mat-form-field>
             <mat-form-field class="w-xs">
                 <mat-label>Confirm password</mat-label>
-                <input type="password" matInput formControlName="confirmPassword" [errorStateMatcher]="confirmPasswordErrorStateMatcher">
-                <mat-error>Hasła muszą być jednakowe</mat-error>
+                <input type="password" matInput formControlName="confirmPassword"
+                 [errorStateMatcher]="confirmPasswordErrorStateMatcher"
+                 >
+                <mat-error>{{getConfirmPasswordError}}</mat-error>
             </mat-form-field>
             <button type="submit" matButton="outlined">Sign up</button>
         </div>

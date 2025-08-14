@@ -42,13 +42,15 @@ export class Signup {
       Validators.minLength(10),
       passwordStrengthValidator()
     ]],
-    confirmPassword: ['']
+    confirmPassword: ['', [
+      Validators.required
+    ]]
   }, {
     validators: [passwordConfirmValidator()]
   })
 
   get getEmailError() {
-    let emailControl = this.form.controls['email'];
+    const emailControl = this.form.controls['email'];
 
     if(emailControl.hasError('required')){
       return "Email jest wymagany";
@@ -62,7 +64,7 @@ export class Signup {
   }
 
   get getPasswordError() {
-    let passwordControl = this.form.controls['password'];
+    const passwordControl = this.form.controls['password'];
 
     if(passwordControl.hasError('required')){
       return "Hasło jest wymagane";
@@ -80,10 +82,16 @@ export class Signup {
   }
 
   get getConfirmPasswordError() {
+    const confirmPasswordControl = this.form.controls['confirmPassword'];
+
+    if(confirmPasswordControl.hasError('required')){
+      return "Potwierdzenie hasła jest wymagane";
+    }
+
     if(this.form.hasError('passwordsAreNotTheSame')){
       return "Hasła nie są takie same";
     }
 
-    return null;
+    return "Błędna wartość";
   }
 }

@@ -6,9 +6,13 @@ konieczne jest zastosowanie ErrorStateMatcher'a ponieważ standardowo mat-error 
 jeżeli kontrolka ma stan invalid. Chcemy w tym przypadku wyświetlić mat error przypisany do kontrolki
 confirmPassword, ale nie w przypadku walidacji tylko tej kontrolki ale przy błędzie walidacji formularza
 (weryfikowany przez passwordConfirmValidator)
+matcher przejmuje sterowanie logiką walidacji, więc musi uwzgledniać wszystkie przypadki kiedy uznajemy
+że kontrolka jest w stanie unvalid
 */
 export class ConfirmPasswordErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+        
+
         //czy formularz ma błąd validacji mówiący że hasła się różnią
         const hasFormpPsswordsAreNotTheSameValidationError = form && form?.form.hasError('passwordsAreNotTheSame') ? true : false
 
@@ -17,7 +21,13 @@ export class ConfirmPasswordErrorStateMatcher implements ErrorStateMatcher {
 
         //czy formularz był submitowany
         const isSubmitted = form && form.submitted ? true : false;
+
+        //weryfikacja czy kontrolka posiada błąd związany z wymagalnością wartości
+        if(control?.hasError('required') && (isControlDirtyOrTouched || isSubmitted)){
+            return true;
+        }
         
+        //weryfikacja czy formularz posiada błąd zwiazany z niezgodnością haseł
         /*
         formularz ma niewłaściwy stan jeżeli:
         - formularz posiada błąd walidacji o niezgodności haseł i kontolka była "dotknięta"
