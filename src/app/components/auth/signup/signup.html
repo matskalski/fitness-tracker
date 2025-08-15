@@ -18,6 +18,13 @@
                     [errorStateMatcher]="confirmPasswordErrorStateMatcher">
                 <mat-error>{{getConfirmPasswordError}}</mat-error>
             </mat-form-field>
+            <mat-form-field class="w-xs mb-1">
+                <mat-label>Birthdate</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="birthdate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>test</mat-error>
+            </mat-form-field>
             <button type="submit" matButton="outlined">Sign up</button>
         </div>
     </form>
