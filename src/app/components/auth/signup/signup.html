@@ -23,9 +23,9 @@
                 <input matInput [matDatepicker]="picker" formControlName="birthdate">
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error>test</mat-error>
+                <mat-error>{{getBirthdateError}}</mat-error>
             </mat-form-field>
-            <button type="submit" matButton="outlined">Sign up</button>
+            <button (click)="onClick()" type="submit" matButton="outlined">Sign up</button>
         </div>
     </form>
 </section>
