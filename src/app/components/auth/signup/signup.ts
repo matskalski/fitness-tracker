@@ -13,20 +13,19 @@ import { passwordStrengthValidator } from '../../../validators/password-strength
 import { passwordConfirmValidator } from '../../../validators/password-confirm.validator';
 import { ConfirmPasswordErrorStateMatcher } from './signup.state-matchers';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MAT_DATE_LOCALE, MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
+import moment from 'moment';
 
 @Component({
   selector: 'app-signup',
+
   imports: [
     FormsModule, 
     MatFormFieldModule, 
     MatInputModule, 
     ReactiveFormsModule, 
     MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    MatDatepickerModule
   ],
-  providers: [{provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
 })
@@ -49,7 +48,7 @@ export class Signup {
     confirmPassword: ['', [
       Validators.required
     ]],
-    birthdate: [new Date(), [
+    birthdate: [moment(), [
       Validators.required
     ]]
   }, {
