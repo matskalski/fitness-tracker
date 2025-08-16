@@ -25,6 +25,11 @@
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error>{{getBirthdateError}}</mat-error>
             </mat-form-field>
+            <span class="w-xs mb-1">
+                <mat-checkbox formControlName="termsConditionsAgreement">Akceptuję
+                    regulamin</mat-checkbox>
+                <mat-error>Regulamin musi być zaakceptowany</mat-error>
+            </span>
             <button (click)="onClick()" type="submit" matButton="outlined">Sign up</button>
         </div>
     </form>

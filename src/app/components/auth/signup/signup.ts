@@ -15,6 +15,7 @@ import { ConfirmPasswordErrorStateMatcher } from './signup.state-matchers';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import moment from 'moment';
 import { dateLowerOrEqualThanValidator } from '../../../validators/date-lower-or-equal-than.validator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-signup',
@@ -25,7 +26,8 @@ import { dateLowerOrEqualThanValidator } from '../../../validators/date-lower-or
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
@@ -54,13 +56,16 @@ export class Signup {
     birthdate: [moment(), [
       Validators.required,
       dateLowerOrEqualThanValidator(this.maxDate)
+    ]],
+    termsConditionsAgreement: [false,[
+      Validators.requiredTrue
     ]]
   }, {
     validators: [passwordConfirmValidator()]
   })
 
   onClick() {
-    console.log(this.form.value)
+    console.log(this.form.valid)
   }
 
   get getCurrentPasswordLength() {
