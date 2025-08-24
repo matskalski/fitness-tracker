@@ -1,1 +1,26 @@
-<router-outlet />
+<mat-sidenav-container class="h-full">
+    <mat-sidenav #sidenav role="navigation" class="h-full w-3xs">
+        <p>test</p>
+    </mat-sidenav>
+    <mat-sidenav-content class="h-full">
+        <mat-toolbar style="width: 100%;">
+            <div>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <div>
+                LOGO
+            </div>
+             <span class="example-spacer"></span>
+            <div>
+                <a class="no-underline" routerLink="/signup">Signup</a>
+                <a class="no-underline" routerLink="/login">Login</a>
+                <a class="no-underline" routerLink="/training">Training</a>
+            </div>
+        </mat-toolbar>
+        <main>
+            <router-outlet />
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>
